@@ -1,0 +1,22 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: api-gateway
+
+services:
+  project-service:
+    url: ${PROJECT_SERVICE_URL:http://localhost:8081}
+  tendering-service:
+    url: ${TENDERING_SERVICE_URL:http://localhost:8082}
+  operations-service:
+    url: ${OPERATIONS_SERVICE_URL:http://localhost:8083}
+  hr-news-service:
+    url: ${HR_NEWS_SERVICE_URL:http://localhost:8084}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

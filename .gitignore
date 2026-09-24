@@ -1,0 +1,21 @@
+# Maven target directories
+target/
+*/target/
+
+# Log files and runtime pids
+logs/
+*.log
+*.pid
+
+# IDE and OS
+.DS_Store
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Temp files
+*.tmp
+*.bak
