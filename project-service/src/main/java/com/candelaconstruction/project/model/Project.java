@@ -37,21 +37,25 @@ public class Project {
     private String description;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @org.hibernate.annotations.BatchSize(size = 30)
     @CollectionTable(name = "project_scope", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "scope_item", length = 1000)
     private List<String> scopeOfWork = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @org.hibernate.annotations.BatchSize(size = 30)
     @CollectionTable(name = "project_challenges", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "challenge_item", length = 1000)
     private List<String> keyChallenges = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @org.hibernate.annotations.BatchSize(size = 30)
     @CollectionTable(name = "project_execution", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "execution_item", length = 1000)
     private List<String> execution = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @org.hibernate.annotations.BatchSize(size = 30)
     @CollectionTable(name = "project_highlights", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "highlight_item", length = 1000)
     private List<String> highlights = new ArrayList<>();

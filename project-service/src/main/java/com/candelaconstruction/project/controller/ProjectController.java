@@ -2,6 +2,7 @@ package com.candelaconstruction.project.controller;
 
 import com.candelaconstruction.project.model.Project;
 import com.candelaconstruction.project.repository.ProjectRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class ProjectController {
     }
 
     @GetMapping
+    @Cacheable(value = "projects", key = "(#category != null ? #category : 'all') + '-' + (#status != null ? #status : 'all') + '-' + (#state != null ? #state : 'all')")
     public ResponseEntity<List<Project>> getAllProjects(
             @RequestParam(name = "category", required = false) String category,
             @RequestParam(name = "status", required = false) String status,
@@ -37,6 +39,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{slug}")
+    @Cacheable(value = "project_by_slug", key = "#slug")
     public ResponseEntity<Project> getProjectBySlug(@PathVariable("slug") String slug) {
         return projectRepository.findBySlug(slug)
                 .map(ResponseEntity::ok)

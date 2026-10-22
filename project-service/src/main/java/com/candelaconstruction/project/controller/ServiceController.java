@@ -2,6 +2,7 @@ package com.candelaconstruction.project.controller;
 
 import com.candelaconstruction.project.model.ServiceItem;
 import com.candelaconstruction.project.repository.ServiceRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +20,13 @@ public class ServiceController {
     }
 
     @GetMapping
+    @Cacheable(value = "services")
     public ResponseEntity<List<ServiceItem>> getAllServices() {
         return ResponseEntity.ok(serviceRepository.findAll());
     }
 
     @GetMapping("/{slug}")
+    @Cacheable(value = "service_by_slug", key = "#slug")
     public ResponseEntity<ServiceItem> getServiceBySlug(@PathVariable("slug") String slug) {
         return serviceRepository.findBySlug(slug)
                 .map(ResponseEntity::ok)

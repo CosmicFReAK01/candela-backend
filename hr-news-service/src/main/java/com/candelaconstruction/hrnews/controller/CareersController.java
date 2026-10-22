@@ -7,6 +7,7 @@ import com.candelaconstruction.hrnews.model.JobPosition;
 import com.candelaconstruction.hrnews.repository.JobPositionRepository;
 import com.candelaconstruction.hrnews.service.JobApplicationService;
 import jakarta.validation.Valid;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class CareersController {
     }
 
     @GetMapping
+    @Cacheable(value = "careers", key = "#department != null ? #department : 'all'")
     public ResponseEntity<List<JobPosition>> getCareers(
             @RequestParam(name = "department", required = false) String department) {
         if (department != null && !department.equalsIgnoreCase("all")) {

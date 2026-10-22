@@ -25,11 +25,13 @@ public class ServiceItem {
     private String color;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @org.hibernate.annotations.BatchSize(size = 30)
     @CollectionTable(name = "service_bullets", joinColumns = @JoinColumn(name = "service_id"))
     @Column(name = "bullet", length = 1000)
     private List<String> bullets = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @org.hibernate.annotations.BatchSize(size = 30)
     @CollectionTable(name = "service_subcategories", joinColumns = @JoinColumn(name = "service_id"))
     @Column(name = "subcategory", length = 500)
     private List<String> subcategories = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.candelaconstruction.project.controller;
 
 import com.candelaconstruction.project.model.StateFootprint;
 import com.candelaconstruction.project.repository.StateFootprintRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class StatsController {
     }
 
     @GetMapping("/api/states")
+    @Cacheable(value = "states")
     public ResponseEntity<List<StateFootprint>> getStates() {
         return ResponseEntity.ok(stateRepository.findAll());
     }

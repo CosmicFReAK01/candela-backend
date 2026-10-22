@@ -2,6 +2,7 @@ package com.candelaconstruction.hrnews.controller;
 
 import com.candelaconstruction.hrnews.model.CorporateNews;
 import com.candelaconstruction.hrnews.repository.CorporateNewsRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class NewsController {
     }
 
     @GetMapping
+    @Cacheable(value = "news", key = "#category != null ? #category : 'all'")
     public ResponseEntity<List<CorporateNews>> getAllNews(
             @RequestParam(name = "category", required = false) String category) {
         if (category != null && !category.equalsIgnoreCase("all")) {
@@ -28,6 +30,7 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
+    @Cacheable(value = "news_by_id", key = "#id")
     public ResponseEntity<CorporateNews> getNewsById(@PathVariable("id") String id) {
         return newsRepository.findById(id)
                 .map(ResponseEntity::ok)

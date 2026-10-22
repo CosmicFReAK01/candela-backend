@@ -2,6 +2,7 @@ package com.candelaconstruction.project.controller;
 
 import com.candelaconstruction.project.model.EquipmentItem;
 import com.candelaconstruction.project.repository.EquipmentRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class FleetController {
     }
 
     @GetMapping
+    @Cacheable(value = "fleet")
     public ResponseEntity<List<EquipmentItem>> getFleet() {
         return ResponseEntity.ok(equipmentRepository.findAll());
     }
