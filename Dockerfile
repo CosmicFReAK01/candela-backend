@@ -19,10 +19,10 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# Copy unified cluster jar
+# Copy the Spring Boot repackaged executable JAR
 COPY --from=builder /app/api-gateway/target/api-gateway-1.0.0-SNAPSHOT.jar ./app.jar
 
 EXPOSE 8080
 
-# Run single optimized JVM with 256MB max heap (fits well within 512MB RAM tier)
-CMD ["java", "-Xmx256m", "-Xms64m", "-jar", "app.jar"]
+# Run single optimized JVM — PORT, DB_URL, DB_USERNAME, DB_PASSWORD come from Render env vars
+CMD ["sh", "-c", "exec java -Xmx256m -Xms64m -Dserver.port=${PORT:-8080} -Dspring.jpa.hibernate.ddl-auto=${DDL_AUTO:-validate} -jar app.jar"]
